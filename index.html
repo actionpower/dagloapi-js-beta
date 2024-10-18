@@ -3,12 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
 
     <title>dagloAPI stream STT Example</title>
     <link href="./index.css" rel="stylesheet">
   </head>
   <body>
     <div id="liveView" class="videoView">
+      <label>API Token</label>
+      <input id="token" placeholder="YOUR TOKEN">
+      <br>
+      <label>API Endpoint</label>
+      <input id="host" placeholder="https://apis.daglo.ai">
       <button id="enableButton" class="enable-btn">
         <span class="enable-btn-label">Microphone ON</span>
       </button>
@@ -19,28 +25,27 @@
     </div>
 
     <script type="module">
-      import { DagloAPI } from './lib/index.js';
-      
-      const baseURL = 'https://staging-apis.daglo.ai'
-      const dagloToken = 'YOUR_TOKEN';
-
-      let client = new DagloAPI({
-        host: baseURL,
-        apiToken: dagloToken
-      });
-      let transcriber = client.stream.transcriber();
-
-      transcriber.on('transcript', (data) => {
-        console.log('[#] onTranscript', data);
-        
-        if (data?.text) {
-          const span = document.createElement('span');
-          span.textContent = data?.text;
-          document.getElementById('transcripts').append(span);
-        }
-      })
+      import { DagloAPI } from 'https://actionpower.github.io/dagloapi-js-beta/lib/daglo-api.module.js';
       
       document.getElementById('enableButton').addEventListener('click', async (event) => {
+        const baseURL = document?.getElementById('host').value?.trim();
+        const dagloToken = document?.getElementById('token').value?.trim();
+
+        let client = new DagloAPI({
+          host: baseURL,
+          apiToken: dagloToken
+        });
+        let transcriber = client.stream.transcriber();
+
+        transcriber.on('transcript', (data) => {
+          console.log('[#] onTranscript', data);
+          
+          if (data?.text) {
+            const span = document.createElement('span');
+            span.textContent = data?.text;
+            document.getElementById('transcripts').append(span);
+          }
+        })
         // transcriber.start();
         // or
         let stream;
