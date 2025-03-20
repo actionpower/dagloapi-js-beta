@@ -23,7 +23,7 @@
     </div>
 
     <script type="module">
-      import { DagloAPI } from './lib/daglo-api.module.js';
+      import { DagloAPI } from 'https://actionpower.github.io/dagloapi-js-beta/lib/daglo-api.module.js';
       
       document.getElementById('enableButton').addEventListener('click', async (event) => {
         const dagloToken = document?.getElementById('token').value?.trim();
@@ -42,8 +42,7 @@
             document.getElementById('transcripts').append(span);
           }
         })
-        // transcriber.start();
-        // or
+
         let stream;
 
         try {
