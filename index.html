@@ -13,8 +13,6 @@
       <label>API Token</label>
       <input id="token" placeholder="YOUR TOKEN">
       <br>
-      <label>API Endpoint</label>
-      <input id="host" placeholder="https://apis.daglo.ai">
       <button id="enableButton" class="enable-btn">
         <span class="enable-btn-label">Microphone ON</span>
       </button>
@@ -28,11 +26,9 @@
       import { DagloAPI } from 'https://actionpower.github.io/dagloapi-js-beta/lib/daglo-api.module.js';
       
       document.getElementById('enableButton').addEventListener('click', async (event) => {
-        const baseURL = document?.getElementById('host').value?.trim();
         const dagloToken = document?.getElementById('token').value?.trim();
 
         let client = new DagloAPI({
-          host: baseURL,
           apiToken: dagloToken
         });
         let transcriber = client.stream.transcriber();
@@ -46,8 +42,7 @@
             document.getElementById('transcripts').append(span);
           }
         })
-        // transcriber.start();
-        // or
+
         let stream;
 
         try {
